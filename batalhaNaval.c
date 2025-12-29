@@ -10,6 +10,93 @@ int main() {
     // Sugestão: Posicione dois navios no tabuleiro, um verticalmente e outro horizontalmente.
     // Sugestão: Utilize `printf` para exibir as coordenadas de cada parte dos navios.
 
+
+    int tabuleiro[10][10]; 
+         
+
+    int navioH[3] = {3, 3, 3};
+    int navioV[3] = {3, 3, 3};
+    int tamanhoNavio = 3;
+
+    // inicializando tabuleiro
+    for (int i = 0; i < 10; i++) {
+        for (int j = 0; j < 10; j++) {
+            tabuleiro[i][j] = 0; // inicializando o tabuleiro com 0
+        }
+    }
+    // definindo posições do navio 
+    int linhaH = 2;
+    int colunaH = 1;
+
+    int linhaV = 5;
+    int colunaV = 5;
+
+    //validando navios para caber no tabuleiro
+    int valido = 1; // assumindo que é válido inicialmente
+    if (colunaH + tamanhoNavio > 10) {
+        printf("Navio horizontal não cabe no tabuleiro.\n");
+        valido = 0;
+    }
+
+    if (linhaV + tamanhoNavio > 10) {
+        printf("Navio vertical não cabe no tabuleiro.\n");
+        valido = 0;
+    }
+
+    //verificando  se há sobreposição
+    if (valido) {
+        for (int i = 0; i < tamanhoNavio; i++) {
+            if (tabuleiro[linhaH][colunaH + i] != 0) {
+                valido = 0;
+            }
+        }
+    }
+
+    if (valido) {
+        for (int i = 0; i < tamanhoNavio; i++) {
+            if (tabuleiro[linhaV + i][colunaV] != 0) {
+                valido = 0;
+            }
+        }
+    }
+    // posicionando navios no tabuleiro
+
+    if (valido) {
+        for (int i = 0; i < 3; i++) {
+            tabuleiro[linhaH][colunaH + i] = navioH[i];
+        }
+
+    for (int i = 0; i < 3; i++) {
+            tabuleiro[linhaV + i][colunaV] = navioV[i];
+        }
+    }
+    // exibindo tabuleiro com coordenadas
+    printf("   ");
+    for (char c = 'A'; c <= 'J'; c++) {
+        printf("%c ", c);
+    }
+    printf("\n");
+
+    for (int i = 0; i < 10; i++) {
+        printf("%2d ", i + 1);
+        for (int j = 0; j < 10; j++) {
+            printf("%d ", tabuleiro[i][j]);
+        }
+        printf("\n");
+    }
+
+
+
+
+
+
+
+        
+
+
+
+        
+
     // Nível Aventureiro - Expansão do Tabuleiro e Posicionamento Diagonal
     // Sugestão: Expanda o tabuleiro para uma matriz 10x10.
     // Sugestão: Posicione quatro navios no tabuleiro, incluindo dois na diagonal.
