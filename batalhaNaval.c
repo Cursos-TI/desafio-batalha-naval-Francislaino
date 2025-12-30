@@ -71,11 +71,14 @@ int main() {
         }
     }
     // exibindo tabuleiro com coordenadas
+    char colunas[10] = {'A','B','C','D','E','F','G','H','I','J'};
+
     printf("   ");
-    for (char c = 'A'; c <= 'J'; c++) {
-        printf("%c ", c);
+    for (int i = 0; i < 10; i++) {
+        printf("%c ", colunas[i]);
     }
     printf("\n");
+
 
     for (int i = 0; i < 10; i++) {
         printf("%2d ", i + 1);
