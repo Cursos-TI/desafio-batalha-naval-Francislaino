@@ -1,156 +1,143 @@
 #include <stdio.h>
+#define linhas 10
+#define colunas 10
 
 // Desafio Batalha Naval - MateCheck
 // Este código inicial serve como base para o desenvolvimento do sistema de Batalha Naval.
 // Siga os comentários para implementar cada parte do desafio.
 
 int main() {
+
+    int tabuleiro[linhas][colunas];
+    char colunasLetra[colunas] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'};
+   
+    // Inicializa o tabuleiro com zeros
+    for (int i = 0; i < linhas; i++) {
+        
+        for (int j = 0; j < colunas; j++) {
+            tabuleiro[i][j] = 0; 
+            
+        }
+        
+    }
+
+    // navio horizontal 3 posicoes
+    int linhaNavioHorizontal = 2;
+    int colunaNavioHorizontal = 3;
+    int tamanhoNaviohorizontal = 3;
     
-
-    int tabuleiro[10][10]; 
-         
-
-    int navioH[3] = {3, 3, 3};
-    int navioV[3] = {3, 3, 3};
-    int tamanhoNavio = 3;
-
-    // inicializando tabuleiro
-    for (int i = 0; i < 10; i++) {
-        for (int j = 0; j < 10; j++) {
-            tabuleiro[i][j] = 0; // inicializando o tabuleiro com 0
+    //valida se o navio horizontal cabe no tabuleiro
+     int valido = 1;
+    if (colunaNavioHorizontal + tamanhoNaviohorizontal <= colunas) {
+        for (int j = 0; j < tamanhoNaviohorizontal; j++) {
+           if (tabuleiro[linhaNavioHorizontal][colunaNavioHorizontal + j] != 0) {
+                valido = 0; // Posição já ocupada
+                break;
+            }
+            
+            
         }
+    } else {
+        valido = 0; // Navio não cabe no tabuleiro
     }
-    // definindo posições do navio horizontal e vertical
-    int linhaH = 2;
-    int colunaH = 1;
-
-    int linhaV = 5;
-    int colunaV = 5;
-
-    // definindo posições dos navios diagonais
-    int linhaD1 = 1;
-    int colunaD1 = 6;
-
-    int linhaD2 = 9;
-    int colunaD2 = 2;
-
-
-    //validando navios para caber no tabuleiro
-    int valido = 1; // assumindo que é válido inicialmente
-
-
-    // valida navio horizontal
-    valido = 1;
-
-    if (colunaH + tamanhoNavio > 10) {
-        valido = 0;
-    }
-
-    for (int i = 0; i < tamanhoNavio && valido; i++) {
-        if (tabuleiro[linhaH][colunaH + i] != 0) {
-            valido = 0;
-        }
-    }
-
-    // posiciona navio horizontal
+    
     if (valido) {
-        for (int i = 0; i < tamanhoNavio; i++) {
-            tabuleiro[linhaH][colunaH + i] = 3;
-        }
+    for (int j = 0; j < tamanhoNaviohorizontal; j++) {
+        tabuleiro[linhaNavioHorizontal][colunaNavioHorizontal + j] = 3;
     }
+}
 
-    // valida navio vertical
+    // navio vertical 3 posicoes
+    int linhaNavioVertical = 5;
+    int colunaNavioVertical = 2;
+    int tamanhoNavioVertical = 3;
+
+    //valida se o navio vertical cabe no tabuleiro
     valido = 1;
-
-    if (linhaV + tamanhoNavio > 10) {
-        valido = 0;
-    }
-
-    for (int i = 0; i < tamanhoNavio && valido; i++) {
-        if (tabuleiro[linhaV + i][colunaV] != 0) {
-            valido = 0;
+    if (linhaNavioVertical + tamanhoNavioVertical <= linhas) {
+        for (int i = 0; i < tamanhoNavioVertical; i++) {
+            if (tabuleiro[linhaNavioVertical + i][colunaNavioVertical] != 0) {
+                valido = 0; // Posição já ocupada
+                break;
+            }
         }
+    } else {
+        valido = 0; // Navio não cabe no tabuleiro
     }
-
-    // posiciona navio vertical
     if (valido) {
-        for (int i = 0; i < tamanhoNavio; i++) {
-            tabuleiro[linhaV + i][colunaV] = 3;
+        for (int i = 0; i < tamanhoNavioVertical; i++) {
+            tabuleiro[linhaNavioVertical + i][colunaNavioVertical] = 3;
         }
     }
+    
+    // navio diagonal 3 posicoes
+    int linhaNavioDiagonal = 4;
+    int colunaNavioDiagonal = 5;
+    int tamanhoNavioDiagonal = 3;
+   
 
-    // valida navio diagonal descendo
+    //valida se o navio diagonal cabe no tabuleiro
     valido = 1;
-
-    if (linhaD1 + tamanhoNavio > 10 || colunaD1 + tamanhoNavio > 10) {
-        valido = 0;
-    }
-
-    for (int i = 0; i < tamanhoNavio && valido; i++) {
-        if (tabuleiro[linhaD1 + i][colunaD1 + i] != 0) {
-            valido = 0;
+    if (linhaNavioDiagonal + tamanhoNavioDiagonal <= linhas && colunaNavioDiagonal + tamanhoNavioDiagonal <= colunas) {
+        for (int i = 0; i < tamanhoNavioDiagonal; i++) {
+            if (tabuleiro[linhaNavioDiagonal + i][colunaNavioDiagonal + i] != 0) {
+                valido = 0; // Posição já ocupada
+                break;
+            }
         }
+    } else {
+        valido = 0; // Navio não cabe no tabuleiro
     }
 
-    // posiciona navio diagonal descendo
     if (valido) {
-        for (int i = 0; i < tamanhoNavio; i++) {
-            tabuleiro[linhaD1 + i][colunaD1 + i] = 3;
+        for (int i = 0; i < tamanhoNavioDiagonal; i++) {
+            tabuleiro[linhaNavioDiagonal + i][colunaNavioDiagonal + i] = 3;
         }
     }
 
-    // valida navio diagonal subindo
+    //navio diagonal subindo 3 posicoes
+    int linhaNavioDiagonal2 = 9;
+    int colunaNavioDiagonal2 = 3;
+    int tamanhoNavioDiagonal2 = 3;
+
+    //valida se o navio diagonal subindo cabe no tabuleiro
     valido = 1;
-
-    if (linhaD2 - (tamanhoNavio - 1) < 0 || colunaD2 + tamanhoNavio > 10) {
-        valido = 0;
-    }
-
-    for (int i = 0; i < tamanhoNavio && valido; i++) {
-        if (tabuleiro[linhaD2 - i][colunaD2 + i] != 0) {
-            valido = 0;
+    if (linhaNavioDiagonal2 - tamanhoNavioDiagonal2 + 1 >= 0 && colunaNavioDiagonal2 + tamanhoNavioDiagonal2 <= colunas) {
+        for (int i = 0; i < tamanhoNavioDiagonal2; i++) {
+            if (tabuleiro[linhaNavioDiagonal2 - i][colunaNavioDiagonal2 + i] != 0) {
+                valido = 0; // Posição já ocupada
+                break;
+            }
         }
+    } else {
+        valido = 0; // Navio não cabe no tabuleiro
     }
 
-    // posiciona navio diagonal subindo
+
     if (valido) {
-        for (int i = 0; i < tamanhoNavio; i++) {
-            tabuleiro[linhaD2 - i][colunaD2 + i] = 3;
+        for (int i = 0; i < tamanhoNavioDiagonal2; i++) {
+            tabuleiro[linhaNavioDiagonal2 - i][colunaNavioDiagonal2 + i] = 3;
         }
     }
 
-
-
-
-    // exibindo tabuleiro com coordenadas
-    char colunas[10] = {'A','B','C','D','E','F','G','H','I','J'};
-
-    printf("   ");
-    for (int i = 0; i < 10; i++) {
-        printf("%c ", colunas[i]);
+    // Exibe o tabuleiro atualizado
+    printf("  ");
+    for (int i = 0; i < colunas; i++) {
+        printf(" %c", colunasLetra[i]);
     }
     printf("\n");
 
-
-    for (int i = 0; i < 10; i++) {
-        printf("%2d ", i + 1);
-        for (int j = 0; j < 10; j++) {
-            printf("%d ", tabuleiro[i][j]);
+    for (int i = 0; i < linhas; i++) {
+        printf("%2d", i + 1);
+        for (int j = 0; j < colunas; j++) {
+            printf(" %d", tabuleiro[i][j]);
         }
         printf("\n");
     }
 
 
+   
 
-
-
-
-
-        
-
-
-
-        
 
     // Nível Aventureiro - Expansão do Tabuleiro e Posicionamento Diagonal
     // Sugestão: Expanda o tabuleiro para uma matriz 10x10.
