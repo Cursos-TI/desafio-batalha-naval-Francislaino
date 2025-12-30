@@ -5,11 +5,7 @@
 // Siga os comentários para implementar cada parte do desafio.
 
 int main() {
-    // Nível Novato - Posicionamento dos Navios
-    // Sugestão: Declare uma matriz bidimensional para representar o tabuleiro (Ex: int tabuleiro[5][5];).
-    // Sugestão: Posicione dois navios no tabuleiro, um verticalmente e outro horizontalmente.
-    // Sugestão: Utilize `printf` para exibir as coordenadas de cada parte dos navios.
-
+    
 
     int tabuleiro[10][10]; 
          
@@ -24,52 +20,108 @@ int main() {
             tabuleiro[i][j] = 0; // inicializando o tabuleiro com 0
         }
     }
-    // definindo posições do navio 
+    // definindo posições do navio horizontal e vertical
     int linhaH = 2;
     int colunaH = 1;
 
     int linhaV = 5;
     int colunaV = 5;
 
+    // definindo posições dos navios diagonais
+    int linhaD1 = 1;
+    int colunaD1 = 6;
+
+    int linhaD2 = 9;
+    int colunaD2 = 2;
+
+
     //validando navios para caber no tabuleiro
     int valido = 1; // assumindo que é válido inicialmente
+
+
+    // valida navio horizontal
+    valido = 1;
+
     if (colunaH + tamanhoNavio > 10) {
-        printf("Navio horizontal não cabe no tabuleiro.\n");
         valido = 0;
     }
+
+    for (int i = 0; i < tamanhoNavio && valido; i++) {
+        if (tabuleiro[linhaH][colunaH + i] != 0) {
+            valido = 0;
+        }
+    }
+
+    // posiciona navio horizontal
+    if (valido) {
+        for (int i = 0; i < tamanhoNavio; i++) {
+            tabuleiro[linhaH][colunaH + i] = 3;
+        }
+    }
+
+    // valida navio vertical
+    valido = 1;
 
     if (linhaV + tamanhoNavio > 10) {
-        printf("Navio vertical não cabe no tabuleiro.\n");
         valido = 0;
     }
 
-    //verificando  se há sobreposição
+    for (int i = 0; i < tamanhoNavio && valido; i++) {
+        if (tabuleiro[linhaV + i][colunaV] != 0) {
+            valido = 0;
+        }
+    }
+
+    // posiciona navio vertical
     if (valido) {
         for (int i = 0; i < tamanhoNavio; i++) {
-            if (tabuleiro[linhaH][colunaH + i] != 0) {
-                valido = 0;
-            }
+            tabuleiro[linhaV + i][colunaV] = 3;
         }
     }
 
+    // valida navio diagonal descendo
+    valido = 1;
+
+    if (linhaD1 + tamanhoNavio > 10 || colunaD1 + tamanhoNavio > 10) {
+        valido = 0;
+    }
+
+    for (int i = 0; i < tamanhoNavio && valido; i++) {
+        if (tabuleiro[linhaD1 + i][colunaD1 + i] != 0) {
+            valido = 0;
+        }
+    }
+
+    // posiciona navio diagonal descendo
     if (valido) {
         for (int i = 0; i < tamanhoNavio; i++) {
-            if (tabuleiro[linhaV + i][colunaV] != 0) {
-                valido = 0;
-            }
+            tabuleiro[linhaD1 + i][colunaD1 + i] = 3;
         }
     }
-    // posicionando navios no tabuleiro
 
+    // valida navio diagonal subindo
+    valido = 1;
+
+    if (linhaD2 - (tamanhoNavio - 1) < 0 || colunaD2 + tamanhoNavio > 10) {
+        valido = 0;
+    }
+
+    for (int i = 0; i < tamanhoNavio && valido; i++) {
+        if (tabuleiro[linhaD2 - i][colunaD2 + i] != 0) {
+            valido = 0;
+        }
+    }
+
+    // posiciona navio diagonal subindo
     if (valido) {
-        for (int i = 0; i < 3; i++) {
-            tabuleiro[linhaH][colunaH + i] = navioH[i];
-        }
-
-    for (int i = 0; i < 3; i++) {
-            tabuleiro[linhaV + i][colunaV] = navioV[i];
+        for (int i = 0; i < tamanhoNavio; i++) {
+            tabuleiro[linhaD2 - i][colunaD2 + i] = 3;
         }
     }
+
+
+
+
     // exibindo tabuleiro com coordenadas
     char colunas[10] = {'A','B','C','D','E','F','G','H','I','J'};
 
