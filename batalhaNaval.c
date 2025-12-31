@@ -1,15 +1,18 @@
 #include <stdio.h>
 #define linhas 10
 #define colunas 10
+#define tamHab 5
 
 // Desafio Batalha Naval - MateCheck
 // Este código inicial serve como base para o desenvolvimento do sistema de Batalha Naval.
 // Siga os comentários para implementar cada parte do desafio.
 
 int main() {
-
+    
+    // Declaração do tabuleiro 10x10
     int tabuleiro[linhas][colunas];
     char colunasLetra[colunas] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'};
+
    
     // Inicializa o tabuleiro com zeros
     for (int i = 0; i < linhas; i++) {
@@ -119,6 +122,127 @@ int main() {
             tabuleiro[linhaNavioDiagonal2 - i][colunaNavioDiagonal2 + i] = 3;
         }
     }
+
+    //decalração das habilidades especiais
+    int cone[tamHab][tamHab];
+    int cruz[tamHab][tamHab];
+    int octaedro[tamHab][tamHab];
+
+    // Inicializa as habilidades especiais com zeros
+    for (int i = 0; i < tamHab; i++) {
+        for (int j = 0; j < tamHab; j++) {
+            cone[i][j] = 0;
+            cruz[i][j] = 0;
+            octaedro[i][j] = 0;
+        }
+    }
+
+    int meio = tamHab / 2;
+
+    // Preenche a habilidade em cone
+    for (int i = 0; i < tamHab; i++) {
+        for (int j = 0; j < tamHab; j++) {
+
+            if (j >= meio - i && j <= meio + i && i <= meio) {
+                cone[i][j] = 1;
+            } else {
+                cone[i][j] = 0;
+            }
+        }
+    }
+
+
+    // Preenche a habilidade em cruz
+    for (int i = 0; i < tamHab; i++) {
+        for (int j = 0; j < tamHab; j++) {
+
+            if (i == meio || j == meio)
+                cruz[i][j] = 1;
+            else
+                cruz[i][j] = 0;
+        }
+    }
+
+
+    // Preenche a habilidade em octaedro
+    for (int i = 0; i < tamHab; i++) {
+
+        int dist = i <= meio ? i : tamHab - 1 - i;
+
+        for (int j = 0; j < tamHab; j++) {
+
+            if (j >= meio - dist && j <= meio + dist)
+                octaedro[i][j] = 1;
+            else
+                octaedro[i][j] = 0;
+        }
+    }
+
+    //definindo ponto de origem dos efeitos das habilidades
+    int origemConeL = 2, origemConeC = 5;
+    int origemCruzL = 5, origemCruzC = 5;
+    int origemOctL  = 7, origemOctC  = 2;
+
+    //aplicando habilidade cone no tabuleiro]
+
+    for (int i = 0; i < tamHab; i++) {
+        for (int j = 0; j < tamHab; j++) {
+
+            if (cone[i][j] == 1) {
+
+                int lt = origemConeL + (i - meio);
+                int ct = origemConeC + (j - meio);
+
+                if (lt >= 0 && lt < linhas &&
+                    ct >= 0 && ct < colunas) {
+
+                    if (tabuleiro[lt][ct] == 0)
+                        tabuleiro[lt][ct] = 5;
+                }
+            }
+        }
+    }
+    //aplica a habilidade cruz no tabuleiro
+
+    for (int i = 0; i < tamHab; i++) {
+        for (int j = 0; j < tamHab; j++) {
+
+            if (cruz[i][j] == 1) {
+
+                int lt = origemCruzL + (i - meio);
+                int ct = origemCruzC + (j - meio);
+
+                if (lt >= 0 && lt < linhas &&
+                    ct >= 0 && ct < colunas) {
+
+                    if (tabuleiro[lt][ct] == 0)
+                        tabuleiro[lt][ct] = 5;
+                }
+            }
+        }
+    }
+
+    //aplica a habilidade octaedro no tabuleiro
+
+    for (int i = 0; i < tamHab; i++) {
+        for (int j = 0; j < tamHab; j++) {
+
+            if (octaedro[i][j] == 1) {
+
+                int lt = origemOctL + (i - meio);
+                int ct = origemOctC + (j - meio);
+
+                if (lt >= 0 && lt < linhas &&
+                    ct >= 0 && ct < colunas) {
+
+                    if (tabuleiro[lt][ct] == 0)
+                        tabuleiro[lt][ct] = 5;
+                }
+            }
+        }
+    }
+
+    
 
     // Exibe o tabuleiro atualizado
     printf("  ");
